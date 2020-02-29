@@ -1,6 +1,31 @@
 <template>
-<div>
-    <h1>我是登录页</h1>
+<div class="login">
+    <!-- elementui的card属性 -->
+    <el-card class="login_card">
+        <div class="login_img">
+            <img src="../../assets/images/logo_index.png" alt="" style="height:45px">
+        </div>
+        <!-- elementui的表单属性 -->
+        <el-form class="sp">
+            <!-- elementui的表单的标签属性需要有个承接容器的item -->
+            <el-form-item>
+                <!-- 承接容器之后放入input -->
+                <el-input placeholder="请输入您的手机号"></el-input>
+            </el-form-item>
+             <el-form-item>
+                <!-- 承接容器之后放入input -->
+                <el-input placeholder="请输入您的验证码" style="width:60%"></el-input>
+                <!-- button按钮-->
+                <el-button plain style="float:right">发送验证码</el-button>
+            </el-form-item>
+            <el-form-item style="text-align:center">
+                <el-checkbox>我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
+            </el-form-item>
+            <el-form-item>
+                 <el-button type="primary" style="width:100%">登录</el-button>
+            </el-form-item>
+        </el-form>
+    </el-card>
 </div>
 </template>
 
@@ -11,7 +36,29 @@ export default {
 </script>
 <style lang="less" scoped>
 // 引用lang="less" 就可以用less实现预处理 scoped 是局部的意思  如果没有这句话 后面的组件也会出现用样的效果
-h1{
-    color: red
+.login {
+    background-image: url("../../assets/images/bg_login.jpg");
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login_card{
+        width: 540px;
+        height: 350px;
+        background-color: transparent !important;
+        // background: rgba(0, 0, 0, 0.01)
+        .login_img {
+            text-align: center;
+            margin-bottom: 30px
+            }
+        .sp{
+            span{
+                color: skyblue;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 </style>
