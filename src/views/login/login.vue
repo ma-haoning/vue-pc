@@ -22,7 +22,7 @@
                 <el-checkbox>我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
             </el-form-item>
             <el-form-item>
-                 <el-button type="primary" round style="width:100%">登录</el-button>
+                 <el-button type="primary" round style="width:100%" @click="a">登录</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -31,7 +31,12 @@
 
 <script>
 export default {
-
+  methods: {
+    // 跳转页面
+    a () {
+      this.$router.push('/home')
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
