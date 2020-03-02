@@ -49,6 +49,7 @@ export default {
         code: [{ required: true, message: '验证码不能为空' }, { pattern: /^\d{6}$/, message: '验证码必须是6位数字' }],
         // 对于复选框比较特殊 用到validator
         checked: [{
+          // validator是校验的意思
           validator: function (rule, value, callback) {
             value ? callback() : callback(new Error('您还没同意我们的用户协议和隐私条款'))
           }
@@ -63,11 +64,43 @@ export default {
       // 回调函数的两个参数分别对应 校验成功  校验失败
       this.$refs.manualSubmit.validate((isOk, isErr) => {
         if (isOk) {
+          // 通过校验之后 可以发送axios请求
+          // 因为上面是箭头函数 所以 this可以为所欲为
+          this.$axios({
+            url: '/authorizations',
+            params: {}, // 请求的参数 这里不需要
+            data: { mobile: this.loginForm.telephone, code: this.loginForm.code },
+            method: 'post'
+          }).then((res) => {
+            // console.log(res)  前后端分离  现在需要token来接收 当做钥匙每次请求需要携带
+            window.localStorage.setItem('user_token', res.data.data.token)
+            // 跳转到home主页
+            this.$router.push('/home')
+          }).catch(() => { // 手机或者验证码出错的话提示
+            this.$message({
+              // x 显示
+              showClose: true,
+              // 文字居中显示
+              center: true,
+              // 提示的信息
+              message: '您的手机号或者验证码输入错误',
+              // 类型是警告
+              type: 'error'
+            })
+          })
         //   console.log(isOk)
-          this.$router.push('/home')
-        } else {
-        //   console.log(isErr)
-          alert('未通过校验')
+        } else { // 这是未通过校验的分支
+        // 这个是elementUI的message提醒
+          this.$message({
+            // x 显示
+            showClose: true,
+            // 文字居中显示
+            center: true,
+            // 提示的信息
+            message: '校验未通过',
+            // 类型是警告
+            type: 'warning'
+          })
         }
       })
     }
