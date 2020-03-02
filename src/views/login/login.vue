@@ -12,13 +12,15 @@
             <el-form-item prop="telephone">
                 <!-- 承接容器之后放入input -->
                 <!-- 双向数据流来对应 -->
-                <el-input placeholder="请输入您的手机号" v-model="loginForm.telephone"></el-input>
+                <!-- <i class="el-icon-mobile-phone" style="font-size:35px;color:skyblue"></i> -->
+                <el-input placeholder="请输入您的手机号" v-model="loginForm.telephone" ></el-input>
             </el-form-item>
              <el-form-item prop="code">
                 <!-- 承接容器之后放入input -->
+                <!-- <i class="el-icon-loading" style="color:skyblue;font-size:35px"></i> -->
                 <el-input placeholder="请输入您的验证码" style="width:60%" v-model="loginForm.code"></el-input>
                 <!-- button按钮-->
-                <el-button plain style="float:right">发送验证码</el-button>
+                <el-button plain style="float:right" @click.once="code">发送验证码</el-button>
             </el-form-item>
             <el-form-item prop="checked">
                 <el-checkbox v-model="loginForm.checked">我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
@@ -58,6 +60,7 @@ export default {
     }
   },
   methods: {
+    // 手动提交(登录按钮)
     manualSubmit () {
       // 通过ref获取当前组件对象(ref既可以获取原生的dom节点也可以获取当前的组件对象)
       // validate是组件对象的一个方法  方法内部是一个回调函数  也可以是 promise(then,catch)
@@ -103,6 +106,9 @@ export default {
           })
         }
       })
+    },
+    code () {
+      this.loginForm.code = '246810'
     }
   }
 }
