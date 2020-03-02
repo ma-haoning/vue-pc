@@ -5,24 +5,26 @@
         <div class="login_img">
             <img src="../../assets/images/logo_index.png" style="height:45px" alt="">
         </div>
-        <!-- elementui的表单属性 -->
-        <el-form class="sp">
+        <!-- elementui的表单属性  manual 手动的意思-->
+        <el-form class="sp" :model="loginForm" :rules="loginRules" ref="manualSubmit">
             <!-- elementui的表单的标签属性需要有个承接容器的item -->
-            <el-form-item>
+            <!-- 用prop来过度字段名字 -->
+            <el-form-item prop="telephone">
                 <!-- 承接容器之后放入input -->
-                <el-input placeholder="请输入您的手机号"></el-input>
+                <!-- 双向数据流来对应 -->
+                <el-input placeholder="请输入您的手机号" v-model="loginForm.telephone"></el-input>
             </el-form-item>
-             <el-form-item>
+             <el-form-item prop="code">
                 <!-- 承接容器之后放入input -->
-                <el-input placeholder="请输入您的验证码" style="width:60%"></el-input>
+                <el-input placeholder="请输入您的验证码" style="width:60%" v-model="loginForm.code"></el-input>
                 <!-- button按钮-->
                 <el-button plain style="float:right">发送验证码</el-button>
             </el-form-item>
-            <el-form-item style="text-align:center">
-                <el-checkbox>我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
+            <el-form-item prop="checked">
+                <el-checkbox v-model="loginForm.checked">我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
             </el-form-item>
             <el-form-item>
-                 <el-button type="primary" round style="width:100%" @click="a">登录</el-button>
+                 <el-button type="primary" round style="width:100%" @click="manualSubmit" >登录</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -31,10 +33,43 @@
 
 <script>
 export default {
+  data () {
+    return {
+      // modle对应的数据
+      loginForm: {
+        // 字段名
+        telephone: '', // 手机号的字段名
+        code: '', // 验证码的字段名
+        checked: false // 设置false就是复选框未选中
+      },
+      // rules对应的数据
+      loginRules: {
+        // 规则内部先写字段名字  每一个字段对应的有好多规则  所以字段名后面是一个数组  数组内部是若干个对象
+        telephone: [{ required: true, message: '您的手机号码不能为空' }, { pattern: /^1[3-9]\d{9}$/, message: '您的手机号码格式必须以1开头,第2个数字必须是[3-9]区间的11位数字' }],
+        code: [{ required: true, message: '验证码不能为空' }, { pattern: /^\d{6}$/, message: '验证码必须是6位数字' }],
+        // 对于复选框比较特殊 用到validator
+        checked: [{
+          validator: function (rule, value, callback) {
+            value ? callback() : callback(new Error('您还没同意我们的用户协议和隐私条款'))
+          }
+        }]
+      }
+    }
+  },
   methods: {
-    // 跳转页面
-    a () {
-      this.$router.push('/home')
+    manualSubmit () {
+      // 通过ref获取当前组件对象(ref既可以获取原生的dom节点也可以获取当前的组件对象)
+      // validate是组件对象的一个方法  方法内部是一个回调函数  也可以是 promise(then,catch)
+      // 回调函数的两个参数分别对应 校验成功  校验失败
+      this.$refs.manualSubmit.validate((isOk, isErr) => {
+        if (isOk) {
+        //   console.log(isOk)
+          this.$router.push('/home')
+        } else {
+        //   console.log(isErr)
+          alert('未通过校验')
+        }
+      })
     }
   }
 }
