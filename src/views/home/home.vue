@@ -1,9 +1,15 @@
 <template>
     <el-container>
         <!-- aside和el-container是同级 -->
-        <el-aside>左侧内容</el-aside>
+        <el-aside>
+            <!-- 此处的asideLayout在全局已经注册过 可以随便使用 -->
+            <asideLayout></asideLayout>
+        </el-aside>
         <el-container>
-            <el-header>头部内容</el-header>
+            <el-header>
+                <!-- 此处的headerLayout在全局已经注册过 可以随便使用 -->
+                <headerLayout></headerLayout>
+            </el-header>
             <el-main>主体部分</el-main>
         </el-container>
     </el-container>

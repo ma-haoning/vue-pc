@@ -9,12 +9,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 // 引入index.css样式
 import '@/styles/index.less'
+// 引入所有普通组件到main.js使用
+import Comment from '@/components'
 // 设置axios的基地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 // 给Vue上设置axios  任何地方都可以直接使用axios
 Vue.prototype.$axios = axios
 // 全局注册elementui
 Vue.use(ElementUI)
+// 全局使用Comment
+Vue.use(Comment)
 Vue.config.productionTip = false
 
 new Vue({
