@@ -6,7 +6,7 @@
             <asideLayout></asideLayout>
         </el-aside>
         <el-container>
-            <el-header>
+            <el-header style="padding:0">
                 <!-- 此处的headerLayout在全局已经注册过 可以随便使用 -->
                 <headerLayout></headerLayout>
             </el-header>
