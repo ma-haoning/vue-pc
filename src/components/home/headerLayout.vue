@@ -7,12 +7,13 @@
         <el-col :span="12">
             <el-row type="flex" justify="end" align="middle" style="padding-right:35px">
                 <img :src="userInfo.photo" alt="" style="width:35px;height:35px;border-radius:50%;margin-right:10px">
-                <el-dropdown trigger="click">
+                <!-- 给下拉菜单设置command事件 -->
+                <el-dropdown trigger="click" @command="dropDownClick">
                     <span>{{userInfo.name}}<i class="el-icon-caret-bottom"></i></span>
                       <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>个人信息</el-dropdown-item>
-                      <el-dropdown-item>git地址</el-dropdown-item>
-                      <el-dropdown-item>退出</el-dropdown-item>
+                      <el-dropdown-item command="info">个人信息</el-dropdown-item>
+                      <el-dropdown-item command="github">git地址</el-dropdown-item>
+                      <el-dropdown-item command="exit">退出</el-dropdown-item>
                       </el-dropdown-menu>
                 </el-dropdown>
             </el-row>
@@ -41,6 +42,18 @@ export default {
     //   console.log(res)
       this.userInfo = res.data.data
     })
+  },
+  methods: {
+    dropDownClick (command) {
+      if (command === 'info') {
+        // 点击了个人信息
+      } else if (command === 'github') {
+        window.location.href = 'https://github.com/ma-haoning'
+      } else {
+        window.localStorage.removeItem('user_token')
+        this.$router.push('/login')
+      }
+    }
   }
 }
 </script>
