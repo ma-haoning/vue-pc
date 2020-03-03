@@ -3,7 +3,7 @@
     <!-- elementui的card属性 -->
     <el-card class="login_card">
         <div class="login_img">
-            <img src="../../assets/images/logo_index.png" style="height:45px" alt="">
+            <img src="../../assets/images/logo_index.png" style="height:35px" alt="">
         </div>
         <!-- elementui的表单属性  manual 手动的意思-->
         <el-form class="sp" :model="loginForm" :rules="loginRules" ref="manualSubmit">
