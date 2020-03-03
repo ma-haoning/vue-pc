@@ -10,7 +10,9 @@
                 <!-- 此处的headerLayout在全局已经注册过 可以随便使用 -->
                 <headerLayout></headerLayout>
             </el-header>
-            <el-main>主体部分</el-main>
+            <el-main>
+                <router-view></router-view>
+            </el-main>
         </el-container>
     </el-container>
 </template>
