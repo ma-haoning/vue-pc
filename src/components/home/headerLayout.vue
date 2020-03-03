@@ -12,7 +12,7 @@
                     <span>{{userInfo.name}}<i class="el-icon-caret-bottom"></i></span>
                       <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item command="info">个人信息</el-dropdown-item>
-                      <el-dropdown-item command="github">git地址</el-dropdown-item>
+                      <el-dropdown-item command="github">NBA湖人</el-dropdown-item>
                       <el-dropdown-item command="exit">退出</el-dropdown-item>
                       </el-dropdown-menu>
                 </el-dropdown>
@@ -48,7 +48,7 @@ export default {
       if (command === 'info') {
         // 点击了个人信息
       } else if (command === 'github') {
-        window.location.href = 'https://github.com/ma-haoning'
+        window.location.href = 'https://china.nba.com/lakers/'
       } else {
         window.localStorage.removeItem('user_token')
         this.$router.push('/login')

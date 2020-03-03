@@ -13,9 +13,9 @@
               <!-- 当前这里的具名插槽是elmentui封装好的 具名插槽就是二级菜单的名字 -->
               <template slot="title">
                   <i class="el-icon-box"></i>
-                  <span>内容管理</span>
+                  <span>最近动态</span>
               </template>
-              <el-menu-item index="/home/publish">发布文章</el-menu-item>
+              <el-menu-item index="/home/publish">对内排行</el-menu-item>
               <el-menu-item index="/home/content">内容列表</el-menu-item>
               <el-menu-item index="/home/comment">评论列表</el-menu-item>
               <el-menu-item index="/home/manager">素材管理</el-menu-item>

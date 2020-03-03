@@ -40,7 +40,7 @@ export default {
       // modle对应的数据
       loginForm: {
         // 字段名
-        telephone: '', // 手机号的字段名
+        telephone: '18330026082', // 手机号的字段名
         code: '', // 验证码的字段名
         checked: false // 设置false就是复选框未选中
       },
