@@ -11,6 +11,8 @@ import axios from 'axios'
 import '@/styles/index.less'
 // 引入所有普通组件到main.js使用
 import Comment from '@/components'
+// 全局使用设置路由权限
+import '@/promission'
 // 设置axios的基地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 // 给Vue上设置axios  任何地方都可以直接使用axios
