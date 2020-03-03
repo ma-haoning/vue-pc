@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import Home from '@/views/home/home.vue'
 // 引入登录页的组件
 import Login from '@/views/login/login.vue'
+// 引入home下的二级路由组件
+import homeSecond from '@/views/home/home/default'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -20,7 +22,13 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    // 配置二级路由表 需要在一级路由表的下面设置children项 children 顾名思义会有很多的组件 而且是一个数组
+    children: [{
+      // path里面空字符串 就是默认打开的页面
+      path: '',
+      component: homeSecond
+    }]
   }
   // {
   //   path: '/about',
