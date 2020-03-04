@@ -8,7 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 引入index.css样式
 import '@/styles/index.less'
 // 引入所有普通组件到main.js使用
-import Comment from '@/components'
+import Common from '@/components'
 // 全局使用设置路由权限
 import '@/promission'
 // 引入axios拦截器
@@ -18,7 +18,7 @@ Vue.prototype.$axios = axios
 // 全局注册elementui
 Vue.use(ElementUI)
 // 全局使用Comment
-Vue.use(Comment)
+Vue.use(Common)
 Vue.config.productionTip = false
 
 new Vue({
