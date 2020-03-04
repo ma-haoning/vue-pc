@@ -30,14 +30,9 @@ export default {
   },
   // 创建完实例执行
   created () {
-    // 获取token 登录进来的时候回存在一个钥匙 token
-    const TOKEN = window.localStorage.getItem('user_token')
     // console.log(TOKEN)
     this.$axios({ // 这个请求的时候需要请求头  这里的请求方式是get  可以省略
-      url: '/user/profile',
-      headers: {
-        Authorization: `Bearer ${TOKEN}`
-      }
+      url: '/user/profile'
     }).then(res => {
     //   console.log(res)
       this.userInfo = res.data.data

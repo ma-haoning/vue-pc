@@ -5,16 +5,14 @@ import router from './router'
 import ElementUI from 'element-ui'
 // 引入elementui样式
 import 'element-ui/lib/theme-chalk/index.css'
-// 引入axios模块
-import axios from 'axios'
 // 引入index.css样式
 import '@/styles/index.less'
 // 引入所有普通组件到main.js使用
 import Comment from '@/components'
 // 全局使用设置路由权限
 import '@/promission'
-// 设置axios的基地址
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+// 引入axios拦截器
+import axios from '@/utils'
 // 给Vue上设置axios  任何地方都可以直接使用axios
 Vue.prototype.$axios = axios
 // 全局注册elementui
