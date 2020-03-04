@@ -1,6 +1,6 @@
 <template>
   <div class="default">
-<h1 style="color:skyblue">湖人现役球星</h1>
+    <h2>湖人现役球星</h2>
       <el-carousel :interval="2000" type="card" height="200px" class="margin">
     <el-carousel-item v-for="item in list" :key="item">
       <img :src="item" alt="">
@@ -10,7 +10,9 @@
     <el-carousel-item v-for="item in list1" :key="item">
       <img :src="item" alt="">
     </el-carousel-item>
-  </el-carousel></div>
+  </el-carousel>
+  <h2>欢迎来到宁说球</h2>
+  </div>
 
 </template>
 
@@ -35,7 +37,7 @@ export default {
 
 <style lang="less" scoped>
 .default {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 99px);
     background-image: url("https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1471702318,3291649578&fm=26&gp=0.jpg");
     text-align:center;
     background-size: contain;

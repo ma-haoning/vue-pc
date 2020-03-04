@@ -10,7 +10,7 @@
                 <!-- 此处的headerLayout在全局已经注册过 可以随便使用 -->
                 <headerLayout></headerLayout>
             </el-header>
-            <el-main>
+            <el-main style="padding-bottom:0">
                 <router-view></router-view>
             </el-main>
         </el-container>

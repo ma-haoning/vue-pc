@@ -3,7 +3,7 @@
     <!-- elementui的card属性 -->
     <el-card class="login_card">
         <div class="login_img">
-            <img src="../../assets/images/logo_index.png" style="height:35px" alt="">
+            <img src="../../assets/images/timg.gif" style="height:45px" alt="">
         </div>
         <!-- elementui的表单属性  manual 手动的意思-->
         <el-form class="sp" :model="loginForm" :rules="loginRules" ref="manualSubmit">
@@ -26,7 +26,7 @@
                 <el-checkbox v-model="loginForm.checked">我已阅读同意<span>用户协议</span>和<span>隐私条款</span></el-checkbox>
             </el-form-item>
             <el-form-item>
-                 <el-button type="primary" round style="width:100%" @click="manualSubmit" >登录</el-button>
+                 <el-button type="primary" round style="width:100%" @click="manualSubmit" background-color:red>登录</el-button>
             </el-form-item>
         </el-form>
     </el-card>
@@ -116,13 +116,29 @@ export default {
 <style lang="less" scoped>
 // 引用lang="less" 就可以用less实现预处理 scoped 是局部的意思  如果没有这句话 后面的组件也会出现用样的效果
 .login {
-    background-image: url("../../assets/images/bg_login1.jpg");
+  .el-button--primary {
+    background-color: #542684;
+    border-color: #542684
+  }
+  .el-input {
+    border-color: #542684
+  }
     height: 100vh;
-    background-size: contain;
+    // background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
+    &:before {
+     content: '';
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     background-image: url('../../assets/images/timg.jpg');
+     filter: blur(5px);
+      background-size: cover;
+    }
     .login_card{
+      z-index: 2;
         width: 540px;
         height: 350px;
         background-color: transparent !important;
@@ -132,6 +148,8 @@ export default {
             margin-bottom: 30px;
             font-size: 36px;
             color: yellowgreen;
+            background-color: #542684;
+            padding: 0;
             }
         .sp{
             span{
