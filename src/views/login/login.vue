@@ -76,7 +76,8 @@ export default {
             method: 'post'
           }).then((res) => {
             // console.log(res)  前后端分离  现在需要token来接收 当做钥匙每次请求需要携带
-            window.localStorage.setItem('user_token', res.data.data.token)
+            // 因为axios的拦截器 响应返回数据之前已经先把data.data其中的第一个data给了所以这里只需要一个data即可
+            window.localStorage.setItem('user_token', res.data.token)
             // 跳转到home主页
             this.$router.push('/home')
           }).catch(() => { // 手机或者验证码出错的话提示

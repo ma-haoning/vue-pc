@@ -1,4 +1,6 @@
 // 这个文件专门设置axios发出的拦截器
+// 引入router下的index.js文件
+import router from '@/router'
 // 引入axios模块
 // 拦截器每次请求和响应成功也好失败也好都需要return
 import axios from 'axios'
@@ -16,6 +18,27 @@ axios.interceptors.request.use(function (config) {
 }, function (error) { // 如果发送请求之前失败了 axios发送请求会进入当前axios的catch分支
 //   console.log(error)
   return Promise.reject(error)
+})
+// 这是axios发送请求之后响应之前的拦截器
+axios.interceptors.response.use(function (response) {
+  // 这个拦截器是在响应之前要执行的函数
+//   console.log(response)
+//   debugger
+  // 这是在把data下面的data给弄出来 三元表达式 如果存在response.data就返回出去response.data 否则返回出去一个空对象
+  return response.data ? response.data : {}
+}, function (error) {
+  // 这是在判断token是否失效
+//   debugger
+  // ==401 说明token失效
+  if (error.response.status === 401) {
+    window.localStorage.removeItem('user_token')
+    // 跳转到login页面  需要引入router  记住这种路由跳转的方法
+    router.push('/login')
+  }
+  //   console.log(error)
+  //   debugger
+
+  return Promise.reject(error) // 和发送请求axios之前的拦截器一样  进入当前axios的catch分支
 })
 // 导出拦截器
 export default axios

@@ -34,8 +34,9 @@ export default {
     this.$axios({ // 这个请求的时候需要请求头  这里的请求方式是get  可以省略
       url: '/user/profile'
     }).then(res => {
-    //   console.log(res)
-      this.userInfo = res.data.data
+      // console.log(res)
+      // 因为响应拦截器之前已经返回出了一个data 所以这里只需要一个data  而不是data.data
+      this.userInfo = res.data
     })
   },
   methods: {
