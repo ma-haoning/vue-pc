@@ -1,9 +1,9 @@
 <template>
 <div class="login">
     <!-- elementui的card属性 -->
-    <el-card class="login_card">
+    <el-card class="login_card" style="border:2px solid #542684">
         <div class="login_img">
-            <img src="../../assets/images/timg.gif" style="height:45px" alt="">
+            <img src="../../assets/images/time.png" style="height:45px" alt="">
         </div>
         <!-- elementui的表单属性  manual 手动的意思-->
         <el-form class="sp" :model="loginForm" :rules="loginRules" ref="manualSubmit">
@@ -148,7 +148,7 @@ export default {
             margin-bottom: 30px;
             font-size: 36px;
             color: yellowgreen;
-            background-color: #542684;
+            // background-color: #542684;
             padding: 0;
             }
         .sp{

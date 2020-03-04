@@ -1,7 +1,7 @@
 <template>
   <div class="aside">
       <div class="img">
-          <img src="../../assets/images/timg.gif" alt="">
+          <img src="../../assets/images/time.png" alt="">
       </div>
       <!-- 给el-menu设置router  router和index是一起的相当于是路由所要跳转的页面 -->
       <el-menu background-color="#542684" text-color="#adafb5" class="elmenu" router>
