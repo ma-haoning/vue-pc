@@ -109,6 +109,13 @@ export default {
       })
     },
     code () {
+      this.$message({
+        showClose: true,
+        center: true,
+        message: '验证码发送成功',
+        type: 'success',
+        duration: 1000
+      })
       this.loginForm.code = '246810'
     }
   }
