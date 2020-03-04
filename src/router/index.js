@@ -2,11 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
 // 引入主页的组件
-import Home from '@/views/home/home.vue'
+import Home from '@/views/home/home'
 // 引入登录页的组件
-import Login from '@/views/login/login.vue'
+import Login from '@/views/login/login'
 // 引入home下的二级路由组件
-import homeSecond from '@/views/home/home/default'
+import homeDefault from '@/views/home/home/default'
 Vue.use(VueRouter)
 const routes = [
   {
@@ -27,8 +27,13 @@ const routes = [
     children: [{
       // path里面空字符串 就是默认打开的页面
       path: '',
-      component: homeSecond
-    }]
+      component: homeDefault
+    },
+    {
+      path: 'comment', // 相当于是'/home/comment'
+      component: () => import('@/views/home/home/comment') // 按需加载组件
+    }
+    ]
   }
   // {
   //   path: '/about',

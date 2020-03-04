@@ -5,7 +5,7 @@
         <!-- 这里的to相当于是router-link内部的to 是要跳转到的地址 -->
         <el-breadcrumb-item to="/home">主页</el-breadcrumb-item>
         <el-breadcrumb-item><!-- 这里不一定会是什么  所以用到插槽 -->
-            <slot name="breadCrumbs"></slot>
+            <slot name="breadCrumb"></slot>
         </el-breadcrumb-item>
     </el-breadcrumb>
 </template>
