@@ -12,8 +12,11 @@
         <el-table-column label="总评论数" prop="total_comment_count" align="center"></el-table-column>
         <el-table-column label="粉丝评论数" prop="fans_comment_count" align="center"></el-table-column>
         <el-table-column label="操作">
+          <!-- el-table-column有一个具名插槽可以获取到当前的row $index -->
+           <template slot-scope='obj'>
             <el-button type="text">修改</el-button>
-            <el-button type="text">打开评论</el-button>
+            <el-button type="text" @click="openAndClose(obj.row)">{{obj.row.comment_status?'关闭':'打开'}}评论</el-button>
+           </template>
         </el-table-column>
     </el-table>
     </el-card>
@@ -55,6 +58,41 @@ export default {
     formatterShow (row, column, cellValue, index) {
       // console.log(row, column, cellValue, index)
       return cellValue ? '正常' : '关闭'
+    },
+    openAndClose (row) {
+      const mess = row.comment_status ? '关闭' : '打开'
+      this.$confirm(`你确定要${mess}评论吗?`, '提示信息', {
+        type: 'warning'
+      })
+      //  如果点击确定 会进入then分支
+        .then(() => {
+          this.$axios({
+            url: '/comments/status',
+            method: 'put',
+            // 查询字符串的参数
+            params: { article_id: row.id },
+            // 请求体的参数
+            data: { allow_comment: !row.comment_status }
+          }) // 这个.then是发送请求成功之后所要执行的内容
+            .then(() => {
+              this.$message({
+                message: `${mess}评论成功`,
+                duration: 900,
+                center: true,
+                type: 'success'
+              })
+              // 更新数据之后重新获取数据
+              this.getComment()
+            })
+        })
+        // 如果点击取消 会进入catch分支
+        .catch(() => {
+          this.$message({
+            message: `${mess}评论失败`,
+            duration: 900,
+            center: true
+          })
+        })
     }
   },
   // 实例创建完执行此函数
