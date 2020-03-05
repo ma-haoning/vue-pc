@@ -7,10 +7,10 @@
     </breadCrumb>
     <!-- 第二个是表格的内容  用data属性来获取数据  再通过prop属性把字段名字写在上面内部会自己运行-->
     <el-table :data="list" :row-class-name="rowShowColor">
-        <el-table-column label="标题" width="600" prop="id"></el-table-column>
-        <el-table-column label="评论状态" prop="status" align="center"></el-table-column>
-        <el-table-column label="总评论数" prop="zong" align="center"></el-table-column>
-        <el-table-column label="粉丝评论数" prop="fans" align="center"></el-table-column>
+        <el-table-column label="标题" width="600" prop="title"></el-table-column>
+        <el-table-column label="评论状态" prop="comment_status" align="center" :formatter="formatterShow"></el-table-column>
+        <el-table-column label="总评论数" prop="total_comment_count" align="center"></el-table-column>
+        <el-table-column label="粉丝评论数" prop="fans_comment_count" align="center"></el-table-column>
         <el-table-column label="操作">
             <el-button type="text">修改</el-button>
             <el-button type="text">打开评论</el-button>
@@ -23,11 +23,7 @@
 export default {
   data () {
     return {
-      list: [{ id: 1, status: '正常', zong: 200, fans: 20 },
-        { id: 2, status: '正常', zong: 200, fans: 20 },
-        { id: 3, status: '正常', zong: 200, fans: 20 },
-        { id: 4, status: '正常', zong: 200, fans: 20 },
-        { id: 5, status: '正常', zong: 200, fans: 20 }]
+      list: []
     }
   },
   methods: {
@@ -40,7 +36,30 @@ export default {
       } else {
         return ''
       }
+    },
+    // 发送请求 接收数据
+    getComment () {
+      this.$axios({
+        url: '/articles',
+        params: {
+          response_type: 'comment' // 因为这个接口对应好几个不同参数的数据
+        }
+      }).then((res) => {
+        // 这里是箭头函数 可以随便用this
+        console.log(res)
+        // 因为el-table不能处理boolean值 所以需要
+        this.list = res.data.results
+      })
+    },
+    // 格式化 true和false的那一列
+    formatterShow (row, column, cellValue, index) {
+      // console.log(row, column, cellValue, index)
+      return cellValue ? '正常' : '关闭'
     }
+  },
+  // 实例创建完执行此函数
+  created () {
+    this.getComment()
   }
 }
 </script>

@@ -48,10 +48,8 @@ export default {
 <style lang="less" scoped>
     .aside{
         height: 100vh;
-        background-color: #542684;
         .img {
             text-align: center;
-            background-color: #542684;
             padding: 10px 0;
             img{
                 width: 120px;
