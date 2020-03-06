@@ -4,6 +4,14 @@ import router from '@/router'
 // 引入axios模块
 // 拦截器每次请求和响应成功也好失败也好都需要return
 import axios from 'axios'
+// 引入json-bigint
+import JSONBig from 'json-bigint'
+// 设置请求响应的默认
+axios.defaults.transformResponse = [function (data) {
+  // debugger
+  // 原来这里默认是 JSON.parse  现在改成 json-bigint的格式的数据  就为了处理超过最大安全数字的问题
+  return JSONBig.parse(data)
+}]
 // 设置axios的基地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 // 设置axios拦截器发送请求之前的拦截器

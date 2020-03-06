@@ -49,7 +49,7 @@ export default {
         }
       }).then((res) => {
         // 这里是箭头函数 可以随便用this
-        // console.log(res)
+        console.log(res)
         // 因为el-table不能处理boolean值 所以需要
         this.list = res.data.results
       })
@@ -71,7 +71,7 @@ export default {
             url: '/comments/status',
             method: 'put',
             // 查询字符串的参数
-            params: { article_id: row.id },
+            params: { article_id: row.id.toString() },
             // 请求体的参数
             data: { allow_comment: !row.comment_status }
           }) // 这个.then是发送请求成功之后所要执行的内容
