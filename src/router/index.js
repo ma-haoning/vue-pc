@@ -29,9 +29,13 @@ const routes = [
       path: '',
       component: homeDefault
     },
-    {
+    { // 评论列表的路由表
       path: 'comment', // 相当于是'/home/comment'
       component: () => import('@/views/home/home/comment') // 按需加载组件
+    },
+    {
+      path: 'manager', // 相当于是'/home/manager'
+      component: () => import('@/views/home/home/material')
     }
     ]
   }
