@@ -34,8 +34,8 @@ export default {
       paginations: {
         // 分页的重要成员  这里的成员的数量可以随机定义 因为获取到请求数据之后把总数和每页的条数都会反馈出一个新数据
         current_page: 1,
-        total: 1000,
-        much_page: 1
+        total: 0,
+        much_page: 15
       },
       // 加载转圈圈
       loading: true
@@ -60,8 +60,8 @@ export default {
         url: '/articles',
         params: {
           response_type: 'comment', // 因为这个接口对应好几个不同参数的数据
-          page: this.paginations.current_page // 这是发送请求时传的参数 当前页码的参数
-          // pre_page: this.paginations.much_page // 这是每页的条数
+          page: this.paginations.current_page, // 这是发送请求时传的参数 当前页码的参数
+          per_page: this.paginations.much_page // 这是每页的条数
         }
       }).then((res) => {
         // 这里是箭头函数 可以随便用this
