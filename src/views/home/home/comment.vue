@@ -49,7 +49,7 @@ export default {
         }
       }).then((res) => {
         // 这里是箭头函数 可以随便用this
-        console.log(res)
+        // console.log(res)
         // 因为el-table不能处理boolean值 所以需要
         this.list = res.data.results
       })
@@ -59,6 +59,7 @@ export default {
       // console.log(row, column, cellValue, index)
       return cellValue ? '正常' : '关闭'
     },
+    // 打开和关闭评论的方法
     openAndClose (row) {
       const mess = row.comment_status ? '关闭' : '打开'
       this.$confirm(`你确定要${mess}评论吗?`, '提示信息', {
@@ -74,7 +75,7 @@ export default {
             // 请求体的参数
             data: { allow_comment: !row.comment_status }
           }) // 这个.then是发送请求成功之后所要执行的内容
-            .then(() => {
+            .then(() => { // 获取axios的成功分支
               this.$message({
                 message: `${mess}评论成功`,
                 duration: 900,
@@ -83,6 +84,12 @@ export default {
               })
               // 更新数据之后重新获取数据
               this.getComment()
+            }).catch(() => { // 获取axios的失败分支
+              this.$message({
+                message: `${mess}评论失败`,
+                duration: 900,
+                center: true
+              })
             })
         })
         // 如果点击取消 会进入catch分支
