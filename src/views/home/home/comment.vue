@@ -38,7 +38,7 @@ export default {
         much_page: 15
       },
       // 加载转圈圈
-      loading: true
+      loading: false
     }
   },
   methods: {

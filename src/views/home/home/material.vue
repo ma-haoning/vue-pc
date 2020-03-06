@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="top">
       <!-- 这是elementui的el-card的组件的具名插槽 -->
       <breadCrumb slot="header">
             <!-- 这是面包屑的全局组件 -->
@@ -38,6 +38,10 @@
              </el-row>
           </el-tab-pane>
       </el-tabs>
+      <!-- 添加上传文件按钮 -->
+      <el-upload class="btn" action="" :http-request="uploadImg" :show-file-list="false">
+          <el-button type="primary" size="small">上传图片</el-button>
+      </el-upload>
   </el-card>
 </template>
 
@@ -87,6 +91,26 @@ export default {
       this.paginations.currentPage = newPage
       // 赋予新值后 重新获取
       this.getMaterial()
+    },
+    // 点击上传头像
+    uploadImg (params) {
+    //   console.log(params) 这个params就是所上传图片的信息
+      var data = new FormData() // 构造一个formdata
+      data.append('image', params.file)
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data: data
+      }).then(() => {
+        // 成功之后提示上传成功
+        this.$message({
+          type: 'success',
+          center: true,
+          duration: 900,
+          message: '上传图片成功'
+        })
+        this.getMaterial()
+      })
     }
   },
   // 实例创建完执行此函数
@@ -124,5 +148,13 @@ export default {
           }
         }
 
+    }
+    .top {
+        position: relative;
+        .btn {
+            position: absolute;
+            right: 15px;
+            top: 70px;
+        }
     }
 </style>
