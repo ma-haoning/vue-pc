@@ -10,7 +10,7 @@ import JSONBig from 'json-bigint'
 axios.defaults.transformResponse = [function (data) {
   // debugger
   // 原来这里默认是 JSON.parse  现在改成 json-bigint的格式的数据  就为了处理超过最大安全数字的问题
-  return JSONBig.parse(data)
+  return data ? JSONBig.parse(data) : {}
 }]
 // 设置axios的基地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
@@ -38,6 +38,8 @@ axios.interceptors.response.use(function (response) {
   // 这是在判断token是否失效
 //   debugger
   // ==401 说明token失效
+  // console.log(error)
+
   if (error.response.status === 401) {
     window.localStorage.removeItem('user_token')
     // 跳转到login页面  需要引入router  记住这种路由跳转的方法

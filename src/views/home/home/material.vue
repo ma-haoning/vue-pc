@@ -14,8 +14,10 @@
                  <div v-for="item in list" :key="item.id" class="img">
                      <img :src="item.url" alt="" style="width:100%;height:100%">
                      <div class="location">
-                         <i class="el-icon-star-on"></i>
-                         <i class="el-icon-delete-solid"></i>
+                       <!-- 给收藏按钮设置变化颜色 当获取到全部素材之后 得到的数据 list内部有一个  is_collected值  当这个值是true  说明是要收藏的素材 当这个值是false的时候 说明当前的状态没有收藏  这里可以把当前的样式设置成红色 谁是true谁就是红色   这里的style的color应该是变量  可以用到三元表达式-->
+                       <!-- 这里面的style  必须要{}包起来  要不然表示v-bind缺少属性 -->
+                         <i class="el-icon-star-on" :style="{color: item.is_collected?'salmon':'black' }" @click='collect(item)'></i>
+                         <i class="el-icon-delete-solid" @click='delMate(item)'></i>
                      </div>
                  </div>
              </div>
@@ -111,6 +113,44 @@ export default {
         })
         this.getMaterial()
       })
+    },
+    // 点击收藏按钮
+    collect (item) {
+      this.$axios({
+        url: `/user/images/${item.id}`,
+        method: 'put',
+        data: {
+          // 如果当前的图片处于收藏状态  那么他要是想取消收藏  他的collect的参数必须是false；相反如果当前的图片非收藏状态那么他需要collect的参数必须是true  用一个方法解决两步操作
+          // 让他当前的状态取反就是collect所需要的参数
+          collect: !item.is_collected
+        }
+      }).then(() => { // 操作成功之后重新获取页面
+        this.$message({
+          type: 'success',
+          center: true,
+          duration: 900,
+          message: !item.is_collected ? '收藏成功' : '取消收藏'
+        })
+        this.getMaterial() // 重新拉取素材的全部内容
+      })
+    },
+    // 点击删除按钮
+    delMate (item) { // 点击确定的分支
+      this.$confirm('您确定要删除吗?', '提示').then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getMaterial()
+        }) // 点击取消的分支
+      }).catch(() => {
+        this.$message({
+          message: '取消删除',
+          center: true,
+          type: 'warning',
+          duration: 900
+        })
+      })
     }
   },
   // 实例创建完执行此函数
@@ -145,6 +185,8 @@ export default {
               align-items: center;
               i {
                   font-size: 30px;
+                  cursor: pointer;
+                  user-select: none;
               }
           }
         }
@@ -158,4 +200,5 @@ export default {
             top: 70px;
         }
     }
+
 </style>
