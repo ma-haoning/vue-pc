@@ -34,8 +34,12 @@ const routes = [
       component: () => import('@/views/home/home/comment') // 按需加载组件
     },
     {
-      path: 'manager', // 相当于是'/home/manager'
+      path: 'manager', // 相当于是'/home/manager' 素材管理的路由表
       component: () => import('@/views/home/home/material')
+    },
+    {
+      path: 'content', // 相当于 '/home/content' 内容列表的路由表
+      component: () => import('@/views/home/home/content') // 按需加载
     }
     ]
   }

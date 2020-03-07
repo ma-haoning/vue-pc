@@ -16,7 +16,7 @@
                   <span>最近动态</span>
               </template>
                <el-menu-item index="/home/message">最新资讯</el-menu-item>
-              <el-menu-item index="/home/rank">队内排行</el-menu-item>
+              <el-menu-item index="/home/content">内容列表</el-menu-item>
               <el-menu-item index="/home/comment">评论列表</el-menu-item>
               <el-menu-item index="/home/manager">素材管理</el-menu-item>
           </el-submenu>
