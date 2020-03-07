@@ -4,7 +4,7 @@
           <img src="../../assets/images/time.png" alt="">
       </div>
       <!-- 给el-menu设置router  router和index是一起的相当于是路由所要跳转的页面 -->
-      <el-menu background-color="#542684" text-color="#adafb5" class="elmenu" router>
+      <el-menu text-color="#adafb5" class="elmenu" router background-color="#542684">
           <el-menu-item index="/home">
               <i class="el-icon-s-home"></i>
               <span>首页</span>
@@ -51,12 +51,14 @@ export default {
         .img {
             text-align: center;
             padding: 10px 0;
+            background:#542684;
             img{
                 width: 120px;
             }
         }
         .elmenu {
             border-right:none;
+            background:#542684
             }
     }
 </style>
