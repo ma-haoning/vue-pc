@@ -11,8 +11,8 @@
           <el-tab-pane label="全部素材" name="all">
              <div class="layout">
                  <!-- v-for在哪个标签里就让哪个标签循环生成  item是数组内部的每一项，每一个成员是一个对象 id正好对应index url就是要循环的图片 -->
-                 <div v-for="item in list" :key="item.id" class="img">
-                     <img :src="item.url" alt="" style="width:100%;height:100%">
+                 <div v-for="(item,index) in list" :key="item.id" class="img">
+                     <img :src="item.url" alt="" style="width:100%;height:100%" @click="selectImg(index)">
                      <div class="location">
                        <!-- 给收藏按钮设置变化颜色 当获取到全部素材之后 得到的数据 list内部有一个  is_collected值  当这个值是true  说明是要收藏的素材 当这个值是false的时候 说明当前的状态没有收藏  这里可以把当前的样式设置成红色 谁是true谁就是红色   这里的style的color应该是变量  可以用到三元表达式-->
                        <!-- 这里面的style  必须要{}包起来  要不然表示v-bind缺少属性 -->
@@ -30,8 +30,8 @@
           <el-tab-pane label="收藏素材" name="collect">
               <div class="layout">
                  <!-- v-for在哪个标签里就让哪个标签循环生成  item是数组内部的每一项，每一个成员是一个对象 id正好对应index url就是要循环的图片 -->
-                 <div v-for="item in list" :key="item.id" class="img">
-                     <img :src="item.url" alt="" style="width:100%;height:100%">
+                 <div v-for="(item,index) in list" :key="item.id" class="img">
+                     <img :src="item.url" alt="" style="width:100%;height:100%" @click="selectImg(index)">
                  </div>
              </div>
               <el-row type="flex" justify="center" align="middle">
@@ -39,6 +39,14 @@
                  <el-pagination background layout="prev,pager,next" :total=paginations.total :page-size="paginations.muchPage" :current-page="paginations.currentPage" @current-change="currentChange"></el-pagination>
              </el-row>
           </el-tab-pane>
+          <!-- 预览图片 -->
+          <el-dialog :visible="preview" @close="preview=false" @opened="openCurrentImg">
+            <el-carousel indicator-position="outside" ref="paomadeng">
+                <el-carousel-item v-for="item in list" :key="item.id" height="400px">
+                  <img style="width:100%;height:100%" :src="item.url" alt="">
+                </el-carousel-item>
+            </el-carousel>
+          </el-dialog>
       </el-tabs>
       <!-- 添加上传文件按钮 -->
       <el-upload class="btn" action="" :http-request="uploadImg" :show-file-list="false">
@@ -59,7 +67,9 @@ export default {
         total: 0,
         currentPage: 1,
         muchPage: 8
-      }
+      },
+      preview: false, // 让当前dialog隐藏
+      currentIndex: -2 // 随机定义一个索引
     }
   },
   methods: {
@@ -151,6 +161,15 @@ export default {
           duration: 900
         })
       })
+    },
+    // 点击每个图片调用这个方法
+    selectImg (index) {
+      this.currentIndex = index
+      this.preview = true
+    },
+    // 这个是diolag打开动画结束的时候执行的函数
+    openCurrentImg () {
+      this.$refs.paomadeng.setActiveItem(this.currentIndex)
     }
   },
   // 实例创建完执行此函数
