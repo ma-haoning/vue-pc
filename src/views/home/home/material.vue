@@ -122,10 +122,11 @@ export default {
 
 <style lang="less" scoped>
     .layout {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
+        // display: flex;
+        // justify-content: space-around;
+        // flex-wrap: wrap;
         .img {
+            display:inline-block;
             position: relative;
             width:220px;
             height:240px;
