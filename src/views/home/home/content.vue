@@ -6,7 +6,7 @@
     </breadCrumb>
     <el-form style="padding-left:30px">
        <el-form-item label="文章状态">
-           <el-radio-group v-model="formData.radio">
+           <el-radio-group v-model="formData.radio" @change="changeCondition">
                <el-radio :label=5>全部</el-radio>
                <el-radio :label=0>草稿</el-radio>
                <el-radio :label=1>待审核</el-radio>
@@ -16,20 +16,20 @@
        </el-form-item>
         <!-- {{radio}} -->
        <el-form-item label="频道列表">
-           <el-select placeholder="请选择频道" v-model="formData.pullList">
+           <el-select placeholder="请选择频道" v-model="formData.pullList" @change="changeCondition">
                <el-option :label="item.name" :value="item.id" v-for="item in list" :key="item.id"></el-option>
            </el-select>
        </el-form-item>
        <!-- {{pullList}} -->
        <el-form-item label="时间选择">
-           <el-date-picker v-model="formData.shijian" type="daterange"></el-date-picker>
+           <el-date-picker v-model="formData.shijian" type="daterange" @change="changeCondition" value-format="yyyy-MM-dd"></el-date-picker>
        </el-form-item>
-       <!-- {{formData.shijian}} -->
+       {{formData.shijian}}
         <!-- 以下是数据的内容 -->
        <div class="total">共找到{{total.total_count}}条数据</div>
        <div class="layout" v-for="item in list1" :key="item.id.toString()">
            <div class="layout_left">
-               <img :src="item.cover.images.length>0 ? item.cover.images : imgDefault" alt="">
+               <img :src="item.cover.images.length>0 ? item.cover.images[0] : imgDefault" alt="">
                <div class="sange"><span>{{item.title}}</span>
                <span><el-tag :type="item.status | filter_type" class="tagg">{{item.status | filter_status}}</el-tag></span>
                <span>{{item.pubdate}}</span></div>
@@ -39,6 +39,9 @@
                <i class="el-icon-delete">删除</i>
            </div>
        </div>
+       <el-row type="flex" justify="center" align="middle" style="height:80px">
+         <el-pagination background layout="prev,pager,next" :page-size="paginations.muchPage" :total="paginations.total" :current-page="paginations.currenPage" @current-change="changePage"></el-pagination>
+       </el-row>
     </el-form>
 </el-card>
 </template>
@@ -49,7 +52,7 @@ export default {
     return {
       formData: {
         // 默认的单选按钮
-        radio: 2,
+        radio: 5,
         // 默认的下拉菜单项为空
         pullList: null,
         // 时间日期的默认值
@@ -61,7 +64,12 @@ export default {
       list1: [],
       // 因为代码都是编译完在运行的  如果一直是当前目录下的图片  运行的时候会报错  因为是运行和编译前的两种格式不一样
       imgDefault: require('../../../assets/images/default.gif'),
-      total: {} // 总数
+      total: {}, // 总数
+      paginations: {
+        total: 0,
+        muchPage: 10,
+        currentPage: 1
+      }
     }
   },
   methods: {
@@ -75,15 +83,38 @@ export default {
       })
     },
     // 获取文章的列表
-    getArticles () {
+    getArticles (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params // es6的语法 变量和属性一样 就可以直接写变量
       }).then(res => { // 获取成功之后把数据付给list1
         console.log(res)
         // 把总数赋值给total
         this.total = res.data
         this.list1 = res.data.results
+        // 把获取到的总数给total
+        this.paginations.total = res.data.total_count
       })
+    },
+    // 当条件改变的时候执行这个函数
+    changeCondition () {
+      // 既然是双向绑定数据 只要改变 formData就会变化
+      const params = {
+        per_page: this.paginations.muchPage,
+        page: this.paginations.currentPage,
+        // 判断是因为当他是 全部 的时候  就是显示全部的内容 不需要处理
+        status: this.formData.radio === 5 ? null : this.formData.radio,
+        channel_id: this.formData.pullList, // 这是频道的类型
+        begin_pubdate: this.formData.shijian && this.formData.shijian.length ? this.formData.shijian[0] : null, // 只要有长度 开始的时间就是数组的第一个
+        end_pubdate: this.formData.shijian && this.formData.shijian.length > 1 ? this.formData.shijian[1] : null // 这里的length>1  是因为 如果length=1  就取不到[1]这个值
+
+      }
+      this.getArticles(params)
+    },
+    // 改变页数
+    changePage (newPage) {
+      this.paginations.currentPage = newPage // 吧当前点击的页码给了currentPage
+      this.changeCondition() // 再次调用
     }
   },
   filters: {
@@ -126,6 +157,17 @@ export default {
     this.getCannel()
     // 获取文章列表
     this.getArticles()
+  },
+  watch: {
+    formData: {
+      // 对输入框进行深度监听
+      deep: true,
+      handler () {
+        // 改变条件的时候需要把当钱的页面为1
+        this.paginations.currentPage = 1
+        this.changeCondition()
+      }
+    }
   }
 }
 </script>
