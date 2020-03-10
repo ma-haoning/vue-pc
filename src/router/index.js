@@ -44,6 +44,10 @@ const routes = [
     {
       path: 'message/:articleId?', // 相当于 '/home/message'  发布文章列表的路由表
       component: () => import('@/views/home/home/articles') // 按需加载
+    },
+    {
+      path: 'account', // 相当于 '/home/account' 账户信息的路由表
+      component: () => import('@/views/home/home/account') // 按需加载
     }
     ]
   }
