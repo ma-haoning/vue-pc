@@ -110,10 +110,31 @@ export default {
     // 判断当前的路由是否有id
     const { articleId } = this.$route.params
     articleId && this.getArticle(articleId) // 开发中常用写法  前者存在就调用后者
+  },
+  // 设置路由监听
+  watch: {
+    $route: function (to, from) {
+      // 这里设置路由监听的意思就是说： 如果当前的页面是从内容列表点击修改而来的  那么所对应的页面的路由就会带着id一串数字 在此基础上如果点击发布文章的链接  这时应该页面应该为空 但是事实上现实的还是刚才点击修改之后的数据  与我们开发中的场景不一样  所以对路由进行监听
+      console.log(to) // 这里的to是一个对象  判断to这个对象下面的params下面的articleId是否存在
+      if (to.params.articleId) {
+        // 当他存在的时候说明是从  内容列表的点击修改之后获取的页面  所以应该有数据
+        this.getArticle(to.params.articleId)
+      } else {
+        // 不存在的话 说明 是空的 那就把原来默认的初始值赋给页面
+        this.formData = {
+          title: '',
+          content: '',
+          cover: {
+            type: 0, // -1 是自动 0是无图  1 是单图 3 是三图
+            images: [] // 字符串数组 对应type  假如 type 为1 images中应该有一个值 假如为3 images应该有三个值 0 images为空
+          },
+          channel_id: null // 频道id
+        }
+      }
+    }
   }
 }
 </script>
 
-<style>
-
+<style lang='less' scoped>
 </style>
