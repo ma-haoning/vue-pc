@@ -10,6 +10,10 @@ import homeDefault from '@/views/home/home/default'
 Vue.use(VueRouter)
 const routes = [
   {
+    path: '*', // 如果路由地址不包括以下的所有 就都是找不到
+    component: () => import('@/views/home/home/404') // 按需加载
+  },
+  {
     path: '/',
     redirect: '/login'
   },

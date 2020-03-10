@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <!-- aside和el-container是同级 -->
-        <el-aside  style="width:200px;min-height:100vh;background:#542684">
+        <el-aside  style="width:200px;min-height:100vh;background:#542684" class="aa">
             <!-- 此处的asideLayout在全局已经注册过 可以随便使用 -->
             <asideLayout></asideLayout>
         </el-aside>

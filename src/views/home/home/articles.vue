@@ -11,13 +11,16 @@
            <quill-editor style="height:300px;margin-left:50px;margin-bottom:100px" v-model="formData.content"></quill-editor>
         </el-form-item>
         <el-form-item label="封面" prop="cover">
-            <el-radio-group v-model="formData.cover.type">
+            <el-radio-group v-model="formData.cover.type" @change="radioChange">
                 <el-radio :label=0>无图</el-radio>
                 <el-radio :label=1>单图</el-radio>
                 <el-radio :label=3>三图</el-radio>
                 <el-radio :label=-1>自动</el-radio>
             </el-radio-group>
+            <!-- {{formData.cover.images}} -->
         </el-form-item>
+        <!-- 这个是全局的组件  第一层组件   父给子传值  通过props接收-->
+         <coverImg :list='formData.cover.images' @bigZhi='zuihou'></coverImg>
         <el-form-item label="频道" prop="channel_id">
             <el-select placeholder="请选择频道" v-model="formData.channel_id">
             <el-option :label="item.name" :value="item.id" v-for="item in list" :key="item.id"></el-option></el-select>
@@ -103,6 +106,21 @@ export default {
       }).then(result => {
         this.formData = result.data // 将数据赋值给表单数据
       })
+    },
+    // 改变radio的type值  然后给出对应个数的div
+    radioChange () {
+      // 得到对应的type值
+      if (this.formData.cover.type === 1) {
+        this.formData.cover.images = [''] // 单图
+      } else if (this.formData.cover.type === 3) {
+        this.formData.cover.images = ['', '', ''] // 三图
+      } else {
+        this.formData.cover.images = [] // 没图或者自动
+      }
+    },
+    zuihou (url, index) {
+      // 把点击的图片的索引找到 从他开始 删除一个  再把url的地址添加上去
+      this.formData.cover.images.splice(index, 1, url)
     }
   },
   created () {

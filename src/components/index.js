@@ -5,6 +5,10 @@ import headerLayout from '@/components/home/headerLayout'
 // 引入面包屑组件 就是这样的形式  主页 >  评论管理
 import breadCrumb from '@/components/common/breadCrumb'
 import VueQuillEditor from 'vue-quill-editor'
+// 引入第一层组件
+import coverImg from '@/components/home/cover-image'
+// 引入第二层组件
+import selectImg from '@/components/home/select-image'
 
 // require styles
 import 'quill/dist/quill.core.css'
@@ -17,6 +21,8 @@ export default {
     Vue.component('asideLayout', asideLayout)
     Vue.component('headerLayout', headerLayout)
     Vue.component('breadCrumb', breadCrumb)
+    Vue.component('coverImg', coverImg)
+    Vue.component('selectImg', selectImg)
     // 注册富文本框
     Vue.use(VueQuillEditor)
   }
