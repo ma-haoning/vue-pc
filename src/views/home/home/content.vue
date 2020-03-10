@@ -24,7 +24,7 @@
        <el-form-item label="时间选择">
            <el-date-picker v-model="formData.shijian" type="daterange" @change="changeCondition" value-format="yyyy-MM-dd"></el-date-picker>
        </el-form-item>
-       {{formData.shijian}}
+       <!-- {{formData.shijian}} -->
         <!-- 以下是数据的内容 -->
        <div class="total">共找到{{total.total_count}}条数据</div>
        <div class="layout" v-for="item in list1" :key="item.id.toString()">
@@ -35,8 +35,8 @@
                <span>{{item.pubdate}}</span></div>
            </div>
            <div class="layout_right">
-               <i class="el-icon-edit">修改</i>
-               <i class="el-icon-delete">删除</i>
+               <i class="el-icon-edit" @click="toArticles(item.id.toString())" style="cursor:pointer; user-select: none;">修改</i>
+               <i class="el-icon-delete" @click="del(item.id.toString())" style="cursor:pointer; user-select: none;">删除</i>
            </div>
        </div>
        <el-row type="flex" justify="center" align="middle" style="height:80px">
@@ -115,6 +115,30 @@ export default {
     changePage (newPage) {
       this.paginations.currentPage = newPage // 吧当前点击的页码给了currentPage
       this.changeCondition() // 再次调用
+    },
+    // 删除草稿文章
+    // 删除素材方法
+    del (id) {
+      //  先友好的提示一下
+      this.$confirm('您确定删除此条数据?', '提示').then(() => {
+        // 如果进入了then 表示点击了确定
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${id}` // 地址 是  /articles/:target target 是文章id
+        }).then(() => {
+          // 如果删除成功了
+          // 重新获取数据
+          //  this.getArticles() // 如果这么写 就意味着你 舍去了当前的页码和条件 不能这么写
+          // 应该带着条件和页码去加载
+          this.changeCondition() // 重新加载
+        }).catch(() => {
+          this.$message.error('删除文章失败')
+        })
+      })
+    },
+    // 跳转到id对应的文章页面
+    toArticles (id) {
+      this.$router.push(`/home/message/${id}`)
     }
   },
   filters: {
@@ -182,6 +206,7 @@ export default {
             border-bottom: 1px dashed #ccc;
         }
         .layout{
+
             display: flex;
             justify-content: space-between;
             height: 140px;

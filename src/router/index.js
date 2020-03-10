@@ -40,6 +40,10 @@ const routes = [
     {
       path: 'content', // 相当于 '/home/content' 内容列表的路由表
       component: () => import('@/views/home/home/content') // 按需加载
+    },
+    {
+      path: 'message/:articleId?', // 相当于 '/home/message'  发布文章列表的路由表
+      component: () => import('@/views/home/home/articles') // 按需加载
     }
     ]
   }
