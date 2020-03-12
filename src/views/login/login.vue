@@ -103,7 +103,8 @@ export default {
             // 提示的信息
             message: '校验未通过',
             // 类型是警告
-            type: 'warning'
+            type: 'warning',
+            duration: 900
           })
         }
       })
